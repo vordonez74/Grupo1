@@ -4,8 +4,9 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-String url = "http://192.168.18.9/barbijo2/recibe.php";
-String device = "esp8266";
+String url = "http://192.168.18.9/grupo1/carga.php";
+
+String device = "tarjeta1";
 
 float oxi = 0.0;
 float pulso = 0.0;
@@ -18,7 +19,9 @@ void setup() {
 
 void loop() {
   HTTPClient http;
-  http.begin(url);
+  WiFiClient client;
+  http.begin(client, url);
+  
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   
   oxi = random(10,90);
