@@ -70,31 +70,31 @@ void setup() {
   // drawing operations and then update the screen all at once by calling
   // display.display(). These examples demonstrate both approaches...
 
-  testdrawline();      // Draw many lines
+  //testdrawline();      // Draw many lines
 
-  testdrawrect();      // Draw rectangles (outlines)
+  //testdrawrect();      // Draw rectangles (outlines)
 
-  testfillrect();      // Draw rectangles (filled)
+  //testfillrect();      // Draw rectangles (filled)
 
-  testdrawcircle();    // Draw circles (outlines)
+  //testdrawcircle();    // Draw circles (outlines)
 
-  testfillcircle();    // Draw circles (filled)
+  //testfillcircle();    // Draw circles (filled)
 
-  testdrawroundrect(); // Draw rounded rectangles (outlines)
+  //testdrawroundrect(); // Draw rounded rectangles (outlines)
 
-  testfillroundrect(); // Draw rounded rectangles (filled)
+  //testfillroundrect(); // Draw rounded rectangles (filled)
 
-  testdrawtriangle();  // Draw triangles (outlines)
+  //testdrawtriangle();  // Draw triangles (outlines)
 
-  testfilltriangle();  // Draw triangles (filled)
+  //testfilltriangle();  // Draw triangles (filled)
 
-  testdrawchar();      // Draw characters of the default font
+  //testdrawchar();      // Draw characters of the default font
 
   testdrawstyles();    // Draw 'stylized' characters
 
-  testscrolltext();    // Draw scrolling text
+  //testscrolltext();    // Draw scrolling text
 
-  testdrawbitmap();    // Draw a small bitmap image
+  //testdrawbitmap();    // Draw a small bitmap image
 
   // Invert and restore display, pausing in-between
   display.invertDisplay(true);
@@ -102,7 +102,7 @@ void setup() {
   display.invertDisplay(false);
   delay(1000);
 
-  testanimate(logo_bmp, LOGO_WIDTH, LOGO_HEIGHT); // Animate bitmaps
+  //testanimate(logo_bmp, LOGO_WIDTH, LOGO_HEIGHT); // Animate bitmaps
 }
 
 void loop() {

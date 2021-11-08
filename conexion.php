@@ -14,5 +14,15 @@ class conexion{
         return $conectar;
     }
 }
+//create table clientes(id int primary key auto_increment, dispositivos varchar(10),temp float, pulso float,oxigeno float,codigo int);
+//create table historico(id int PRIMARY KEY AUTO_INCREMENT, 
+//variable varchar(10), 
+//clientes_id int not null,
+//valor float,
+//fecha DateTime, 
+//foreign KEY (clientes_id) 
+//REFERENCES clientes(id));
+
+//http://192.168.0.20/grupo1/carga.php?dispositivo=tarjeta1&pulso=32&oxigeno=96&temperatura=35
 
 ?>
