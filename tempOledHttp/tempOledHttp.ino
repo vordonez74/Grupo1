@@ -1,5 +1,6 @@
 #include <SPI.h>
 #include <Wire.h>
+#include <ESP8266WiFi.h>
 
 //------------Mlx90614------------
 #include <Adafruit_MLX90614.h>
@@ -19,7 +20,11 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 //------------Mlx90614------------
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
+const char* ssid = "ManuMaxi";
+const char* password = "vvv4528%%$";
+const char* host = "192.168.18.9";
 
+String device = "tarjeta1";
 float oxi = 0.0;
 float pulso = 0.0;
 float temp = 0.0;
@@ -27,7 +32,16 @@ int codigo = 0;
 
 void setup() {
   Serial.begin(115200);
-    
+  Serial.println();
+
+  Serial.printf("Conectando a %s ", ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println(" conectado");    
   //------------Mlx90614------------  
   mlx.begin();  
   //------------Oled------------
@@ -45,6 +59,48 @@ void setup() {
 }
 
 void loop() {
+  WiFiClient client;
+
+  Serial.printf("\n[Conectando a %s ... ", host);
+  if (client.connect(host, 80))
+  {
+    Serial.println("conectado]");
+
+    oxi = random(10,90);
+    pulso = random(10,90);
+    temp = leerTemp();
+    actualizarValores(temp,pulso,oxi);
+    String getData="dispositivo="+device+"&oxigeno="+String(oxi)+"&pulso="+String(pulso)+"&temperatura="+String(temp);
+  
+    String url = "/grupo1/carga.php?"+getData;
+    
+    Serial.println("[Enviando un request]");
+    //Serial.println(url);
+    client.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + host + "\r\n" + "Connection: close\r\n\r\n");
+    
+    Serial.println("[Response:]");
+    while (client.connected() || client.available())
+    {
+      if (client.available())
+      {
+        String respuesta = client.readStringUntil('\n');
+        Serial.println(respuesta);
+        int ini = respuesta.indexOf(":");
+        int fin = respuesta.indexOf("}",ini);
+        codigo = respuesta.substring(ini+1,fin).toInt();
+        Serial.println(codigo);
+      }
+    }
+    client.stop();
+    Serial.println("\n[Desconectado]");
+  }
+  else
+  {
+    Serial.println("Falla de conección!]");
+    client.stop();
+  }
+  delay(5000);
+
 }
 
 float leerTemp(){

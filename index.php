@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container">
+      <!--
       <div class="row">
           <form action="carga.php" method="GET">
               <div class="mb-3">
@@ -27,13 +28,14 @@
               <button type="submit" class="btn btn-primary">Alta</button>
             </form>
       </div>
+      -->
       <div class="row">
           <?php
             require_once('conexion.php');
             $conexion = new conexion();
             $solicitud = "Select * from historico";
             $resultado = mysqli_query($conexion->conectarDb(), $solicitud);
-            echo "<table class='table'><tr><th>Dispositivo</th><th>Variable</th><th>Valor</th><th>Fecha</th><th colspan='2'>Acciones</th></tr>";
+            echo "<table class='table'><tr><th>Dispositivo</th><th>Variable</th><th>Valor</th><th>Fecha</th><th>Accion</th></tr>";
             while($fila =mysqli_fetch_array($resultado)){
                 echo "<tr>";
                 echo "<td>".$fila['id']."</td>";
@@ -41,7 +43,6 @@
                 echo "<td>".$fila['valor']."</td>";
                 echo "<td>".$fila['fecha']."</td>";
                 echo "<td><a href='baja.php?id=".$fila['id']."'>Eliminar</a></td>";
-                echo "<td><a href='modificacion.php?id=".$fila['id']."'>Modificar</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
