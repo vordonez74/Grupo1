@@ -25,6 +25,7 @@ class conexion{
 //REFERENCES clientes(id));
 
 //INSERT INTO `clientes`(`id`, `dispositivo`, `temperatura`, `pulso`, `oxigeno`, `codigo`) VALUES (1,'tarjeta1',0,0,0,1)
+//UPDATE `clientes` SET`temperatura`=0,`pulso`=0,`oxigeno`=0,`codigo`=1 WHERE 1
 
 //https://162.243.166.76:5080/Grupo1/carga.php?dispositivo=tarjeta1&pulso=32&oxigeno=96&temperatura=35
 

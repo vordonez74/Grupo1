@@ -17,7 +17,7 @@ struct valores{ //MAX30105
     int32_t heartRate;
 };
 
-//MAX30105 particleSensor;
+MAX30105 particleSensor;
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
@@ -63,7 +63,7 @@ void setup() {
   
   //--------MAX30105-----------
   // Inicializar sensor
-/*  if (!particleSensor.begin(Wire, I2C_SPEED_FAST))
+  if (!particleSensor.begin(Wire, I2C_SPEED_FAST))
   {
     Serial.println(F("No se encontró MAX30105. Compruebe el cableado o la alimentación."));
     while (1);
@@ -76,7 +76,7 @@ void setup() {
   int adcRange = 4096;    //Options: 2048, 4096, 8192, 16384
   //Configure el sensor con estos ajustes
   particleSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange);
-*/
+
 }
 
 void loop() {
@@ -87,12 +87,10 @@ void loop() {
   {
     Serial.println("[Conectado]");
     if(tomarMuestra){
-      /*valores resultado;
+      valores resultado;
       resultado = calcularFCySO2();
       oxi = resultado.spo2;
-      pulso = resultado.heartRate;*/
-      oxi = 22;
-      pulso = 22;
+      pulso = resultado.heartRate;
       temp = leerTemp();
     }else{
       oxi = 0;
@@ -122,10 +120,8 @@ void loop() {
           Serial.println(codigo);
           if(codigo==1){
             tomarMuestra=true;
-            Serial.println("tomará muestra");
           }else{
             tomarMuestra=false;
-            Serial.println("no tomará muestra");
           }
         }
       }
@@ -148,7 +144,7 @@ float leerTemp(){
   Serial.print(temp); 
   return temp;
 }
-/*
+
 valores calcularFCySO2(){
     valores resultado;  
     uint32_t irBuffer[100]; //datos del sensor de infrarrojos LED
@@ -179,7 +175,7 @@ valores calcularFCySO2(){
     resultado.heartRate = heartRate;
     return resultado;      
 }
-*/
+
 void actualizarValores(float temp,float pulso, float oxi) {
   display.clearDisplay();
   display.setTextSize(1);
