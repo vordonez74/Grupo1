@@ -14,7 +14,8 @@ class conexion{
         return $conectar;
     }
 }
-//create table clientes(id int primary key auto_increment, dispositivo varchar(10),temp float, pulso float,oxigeno float,codigo int);
+//create table clientes(id int primary key auto_increment, dispositivo varchar(10),temperatura float, pulso float,oxigeno float,codigo int);
+//UPDATE clientes SET temperatura='$temp', oxigeno='$oxig', pulso='$pulso' where id='$row[0]'"
 //create table historico(id int PRIMARY KEY AUTO_INCREMENT, 
 //variable varchar(10), 
 //clientes_id int not null,
@@ -23,7 +24,9 @@ class conexion{
 //foreign KEY (clientes_id) 
 //REFERENCES clientes(id));
 
-//http://192.168.0.20/grupo1/carga.php?dispositivo=tarjeta1&pulso=32&oxigeno=96&temperatura=35
+//INSERT INTO `clientes`(`id`, `dispositivo`, `temperatura`, `pulso`, `oxigeno`, `codigo`) VALUES (1,'tarjeta1',0,0,0,1)
+
+//https://162.243.166.76:5080/Grupo1/carga.php?dispositivo=tarjeta1&pulso=32&oxigeno=96&temperatura=35
 
 //DB_USER', 'wordpress'
 //DB_PASSWORD', 'bcViMnngI7wz'

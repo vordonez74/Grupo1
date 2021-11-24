@@ -17,7 +17,7 @@ $select = mysqli_query($conn->conectarDb(), $query);
 $row = mysqli_fetch_row($select);
 
 if($select->num_rows){ #Verifica si existe el dispositivo
-    $query = "UPDATE clientes SET oxigeno='$oxig', pulso='$pulso', temperatura = '$temp' WHERE id = '$row[0]'";
+    $query = "UPDATE clientes SET temperatura='$temp', oxigeno='$oxig', pulso='$pulso' where id='$row[0]'";
     $update = mysqli_query($conn->conectarDB(),$query);
 
     $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','oxigeno','$oxig',CURRENT_TIMESTAMP)";

@@ -17,13 +17,16 @@ struct valores{ //MAX30105
     int32_t heartRate;
 };
 
-MAX30105 particleSensor;
+//MAX30105 particleSensor;
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
 const char* ssid = "ManuMaxi";
+//const char* ssid = "HITRON-4320";
 const char* password = "vvv4528%%$";
-const char* host = "recursoinformatico.ml";
+//const char* password = "wifi03r457";
+const char* host = "192.168.18.9";
+//const char* host = "recursoinformatico.ml";
 
 String device = "tarjeta1";
 int32_t oxi = 0.0;
@@ -44,7 +47,7 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println(" conectado");    
+  Serial.print("[Conectado]");    
   mlx.begin(); //Mlx90614
   
   //------------Oled------------
@@ -60,7 +63,7 @@ void setup() {
   
   //--------MAX30105-----------
   // Inicializar sensor
-  if (!particleSensor.begin(Wire, I2C_SPEED_FAST))
+/*  if (!particleSensor.begin(Wire, I2C_SPEED_FAST))
   {
     Serial.println(F("No se encontró MAX30105. Compruebe el cableado o la alimentación."));
     while (1);
@@ -73,7 +76,7 @@ void setup() {
   int adcRange = 4096;    //Options: 2048, 4096, 8192, 16384
   //Configure el sensor con estos ajustes
   particleSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange);
-
+*/
 }
 
 void loop() {
@@ -82,12 +85,14 @@ void loop() {
   Serial.printf("\n[Conectando a %s ... ", host);
   if (client.connect(host, 80))
   {
-    Serial.println("conectado]");
+    Serial.println("[Conectado]");
     if(tomarMuestra){
-      valores resultado;
+      /*valores resultado;
       resultado = calcularFCySO2();
       oxi = resultado.spo2;
-      pulso = resultado.heartRate;
+      pulso = resultado.heartRate;*/
+      oxi = 22;
+      pulso = 22;
       temp = leerTemp();
     }else{
       oxi = 0;
@@ -97,10 +102,10 @@ void loop() {
     actualizarValores(temp,pulso,oxi);
     String getData="dispositivo="+device+"&oxigeno="+String(oxi)+"&pulso="+String(pulso)+"&temperatura="+String(temp);
   
-    String url = "/grupo1/carga.php?"+getData;
+    String url = "/Grupo1/carga.php?"+getData;
     
     Serial.println("[Enviando un request]");
-    //Serial.println(url);
+    
     client.print(String("GET ") + url + " HTTP/1.1\r\n" + "Host: " + host + "\r\n" + "Connection: close\r\n\r\n");
     
     Serial.println("[Response:]");
@@ -109,15 +114,19 @@ void loop() {
       if (client.available())
       {
         String respuesta = client.readStringUntil('\n');
-        Serial.println(respuesta);
-        int ini = respuesta.indexOf(":");
-        int fin = respuesta.indexOf("}",ini);
-        codigo = respuesta.substring(ini+1,fin).toInt();
-        Serial.println(codigo);
-        if(codigo=='1'){
-          tomarMuestra=true;
-        }else{
-          tomarMuestra=false;
+        if(respuesta.substring(0,1)=="{"){
+          int ini = respuesta.indexOf(":");
+          int fin = respuesta.indexOf("}",ini);
+          codigo = respuesta.substring(ini+1,fin).toInt();
+          Serial.print("[codigo]");
+          Serial.println(codigo);
+          if(codigo==1){
+            tomarMuestra=true;
+            Serial.println("tomará muestra");
+          }else{
+            tomarMuestra=false;
+            Serial.println("no tomará muestra");
+          }
         }
       }
     }
@@ -139,7 +148,7 @@ float leerTemp(){
   Serial.print(temp); 
   return temp;
 }
-
+/*
 valores calcularFCySO2(){
     valores resultado;  
     uint32_t irBuffer[100]; //datos del sensor de infrarrojos LED
@@ -170,7 +179,7 @@ valores calcularFCySO2(){
     resultado.heartRate = heartRate;
     return resultado;      
 }
-
+*/
 void actualizarValores(float temp,float pulso, float oxi) {
   display.clearDisplay();
   display.setTextSize(1);
