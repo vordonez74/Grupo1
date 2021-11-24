@@ -14,7 +14,7 @@ class conexion{
         return $conectar;
     }
 }
-//create table clientes(id int primary key auto_increment, dispositivos varchar(10),temp float, pulso float,oxigeno float,codigo int);
+//create table clientes(id int primary key auto_increment, dispositivo varchar(10),temp float, pulso float,oxigeno float,codigo int);
 //create table historico(id int PRIMARY KEY AUTO_INCREMENT, 
 //variable varchar(10), 
 //clientes_id int not null,
@@ -24,5 +24,18 @@ class conexion{
 //REFERENCES clientes(id));
 
 //http://192.168.0.20/grupo1/carga.php?dispositivo=tarjeta1&pulso=32&oxigeno=96&temperatura=35
+
+//DB_USER', 'wordpress'
+//DB_PASSWORD', 'bcViMnngI7wz'
+//'DB_HOST', 'wordpress-db-ale:3306'
+//mysql -h localhost -u root -p
+//mysql -h localhost -u wordpress -p
+//ssh cucai@wordpress-db-ale
+
+
+//$host = "wordpress-db-ale:3306";
+//$user = "cucai";
+//$pass = "voluntad229";
+//$db = "agenda2";
 
 ?>
