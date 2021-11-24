@@ -17,16 +17,22 @@ $select = mysqli_query($conn->conectarDb(), $query);
 $row = mysqli_fetch_row($select);
 
 if($select->num_rows){ #Verifica si existe el dispositivo
-    $query = "UPDATE clientes SET temperatura='$temp', oxigeno='$oxig', pulso='$pulso' where id='$row[0]'";
-    $update = mysqli_query($conn->conectarDB(),$query);
 
-    $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','oxigeno','$oxig',CURRENT_TIMESTAMP)";
-    $insert = mysqli_query($conn->conectarDB(),$query);
-    $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','pulso','$pulso',CURRENT_TIMESTAMP)";
-    $insert = mysqli_query($conn->conectarDB(),$query);
-    $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','temperatura','$temp',CURRENT_TIMESTAMP)";
-    $insert = mysqli_query($conn->conectarDB(),$query);
+    $query = "SELECT codigo FROM clientes WHERE dispositivo = '$disp'";
+    $select = mysqli_query($conn->conectarDb(), $query);
+    $codigo = mysqli_fetch_row($select);
+    if($codigo[0]>0){
 
+        $query = "UPDATE clientes SET temperatura='$temp', oxigeno='$oxig', pulso='$pulso' where id='$row[0]'";
+        $update = mysqli_query($conn->conectarDB(),$query);
+
+        $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','oxigeno','$oxig',CURRENT_TIMESTAMP)";
+        $insert = mysqli_query($conn->conectarDB(),$query);
+        $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','pulso','$pulso',CURRENT_TIMESTAMP)";
+        $insert = mysqli_query($conn->conectarDB(),$query);
+        $query = "INSERT INTO historico(clientes_id, variable, valor, Fecha) VALUES('$row[0]','temperatura','$temp',CURRENT_TIMESTAMP)";
+        $insert = mysqli_query($conn->conectarDB(),$query);
+    }
     $query = "SELECT codigo FROM clientes WHERE id = '$row[0]'";
     $resultado = mysqli_query($conn->conectarDb(),$query);
     $row = mysqli_fetch_row($resultado);
